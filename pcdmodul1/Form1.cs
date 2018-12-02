@@ -28,6 +28,30 @@ namespace pcdmodul1
                 this.pbInput.Image = new Bitmap(bukaFile.FileName);
                 toolStripStatusLabel1.Text = bukaFile.FileName;
                 toolStripStatusLabel2.Text = this.pbInput.Image.PhysicalDimension.ToString();
+
+                //test
+                Bitmap b = new Bitmap((Bitmap)this.pbInput.Image);
+                int nilaiBrightness = 50;
+                double C = 0;
+                double F = (259 * (C + 255)) / 255 * (259 - C);
+                progressBar1.Visible = true;
+                for (int i = 0; i < b.Width; i++)
+                {
+                    for (int j = 0; j < b.Height; j++)
+                    {
+                        Color c1 = b.GetPixel(i, j);
+                        int r1 = Convert.ToInt16(truncated((F * (truncate(c1.R + nilaiBrightness) - 128)) + 128));
+                        int g1 = Convert.ToInt16(truncated((F * (truncate(c1.G + nilaiBrightness) - 128)) + 128));
+                        int b1 = Convert.ToInt16(truncated((F * (truncate(c1.B + nilaiBrightness) - 128)) + 128));
+
+                        b.SetPixel(i, j, Color.FromArgb(r1, g1, b1));
+                    }
+                    progressBar1.Value = Convert.ToInt16(100 * (i + 1) / b.Width);
+                }
+                progressBar1.Visible = false;
+                this.efek1.Image = b;
+                label3.Visible = true;
+                
             }
         }
 
@@ -78,14 +102,6 @@ namespace pcdmodul1
                     progressBar1.Visible = true;
                     for (int i = 0; i < b.Width; i++)
                     {
-                        //for (int j = 0;j < b.Height; j++)
-                        //{
-                        //    Color c1 = b.GetPixel(i, j);
-                        //    int r1 = truncate(c1.R + nilaiBrightness);
-                        //    int g1 = truncate(c1.G + nilaiBrightness);
-                        //    int b1 = truncate(c1.B + nilaiBrightness);
-                        //    b.SetPixel(i, j, Color.FromArgb(r1, g1, b1));
-                        //}
                         for (int j = 0; j < b.Height; j++)
                         {
                             Color c1 = b.GetPixel(i, j);
@@ -1173,6 +1189,205 @@ namespace pcdmodul1
                 Bitmap b = new Bitmap((Bitmap)this.pbInput.Image);
 
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek1.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void efek2_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek2.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void efek3_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek3.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void sephiaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pbInput.Image == null)
+            {
+                MessageBox.Show("Tidak Ada citra yang akan diolah");
+            }
+            else
+            {
+                Bitmap b = new Bitmap((Bitmap)this.pbInput.Image);
+                progressBar1.Visible = true;
+                for (int i = 0; i < b.Width; i++)
+                {
+                    for (int j = 0; j < b.Height; j++)
+                    {
+                        Color c1 = b.GetPixel(i, j);
+                        Color new_w = Color.FromArgb((byte)(c1.R), (byte)(c1.R * 0.82), (byte)(c1.R * 0.28));
+                        b.SetPixel(i, j, new_w);
+                    }
+                }
+                progressBar1.Visible = false;
+                // this.pbOutput.Image = b;
+                this.efek3.Image = b;
+                label5.Visible = true;
+            }
+        }
+        
+
+        private void hscBrightness_Scroll(object sender, ScrollEventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void biruToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pbInput.Image == null)
+            {
+                MessageBox.Show("Tidak Ada citra yang akan diolah");
+            }
+            else
+            {
+                int cr;
+
+                Bitmap vertikal = new Bitmap((Bitmap)this.pbInput.Image);
+                progressBar1.Visible = true;
+                for (int i = 0; i < vertikal.Width; i++)
+                {
+                    for (int j = 0; j < vertikal.Height; j++)
+                    {
+                        Color c1 = vertikal.GetPixel(i, j);
+                        cr = c1.B;
+                        Color new_w = Color.FromArgb(0,0,cr);
+                        vertikal.SetPixel(i, j, new_w);
+                    }
+                }
+                progressBar1.Visible = false;
+                // this.pbOutput.Image = b;
+                this.efek2.Image = vertikal;
+                label4.Visible = true;
+            }
+        }
+
+        private void hijauToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pbInput.Image == null)
+            {
+                MessageBox.Show("Tidak Ada citra yang akan diolah");
+            }
+            else
+            {
+                int cr;
+
+                Bitmap horizontal = new Bitmap((Bitmap)this.pbInput.Image);
+                progressBar1.Visible = true;
+                for (int i = 0; i < horizontal.Width; i++)
+                {
+                    for (int j = 0; j < horizontal.Height; j++)
+                    {
+                        Color c1 = horizontal.GetPixel(i, j);
+                        cr = c1.G;
+                        Color new_w = Color.FromArgb(0, cr, 0);
+                        horizontal.SetPixel(i, j, new_w);
+                    }
+                }
+                progressBar1.Visible = false;
+                // this.pbOutput.Image = b;
+                this.efek4.Image = horizontal;
+                label6.Visible = true;
+
+            }
+        }
+
+        private void pbOutput_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void efek4_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek4.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void efek5_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek5.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void efek6_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek6.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void efek7_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek7.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void efek8_Click(object sender, EventArgs e)
+        {
+            Bitmap b = new Bitmap((Bitmap)this.efek8.Image);
+            this.pbOutput.Image = b;
+        }
+
+        private void merahToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pbInput.Image == null)
+            {
+                MessageBox.Show("Tidak Ada citra yang akan diolah");
+            }
+            else
+            {
+                int cr;
+
+                Bitmap horizontal = new Bitmap((Bitmap)this.pbInput.Image);
+                progressBar1.Visible = true;
+                for (int i = 0; i < horizontal.Width; i++)
+                {
+                    for (int j = 0; j < horizontal.Height; j++)
+                    {
+                        Color c1 = horizontal.GetPixel(i, j);
+                        cr = c1.R;
+                        Color new_w = Color.FromArgb(cr, 0, 0);
+
+                        Color w = horizontal.GetPixel(i, j);
+                        horizontal.SetPixel(i, j, new_w);
+                    }
+                }
+                progressBar1.Visible = false;
+                // this.pbOutput.Image = b;
+                this.efek5.Image = horizontal;
+                label7.Visible = true;
+
+            }
+        }
+
+        private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bitmap horizontal = new Bitmap((Bitmap)this.pbInput.Image);
+            progressBar1.Visible = true;
+            for (int i = 0; i < horizontal.Width; i++)
+            {
+                for (int j = 0; j < horizontal.Height; j++)
+                {
+                    
+                    Color w = horizontal.GetPixel(i, j);
+                    horizontal.SetPixel(i, horizontal.Height-1-j, w);
+                }
+            }
+            progressBar1.Visible = false;
+            // this.pbOutput.Image = b;
+            this.pbOutput.Image = horizontal;
         }
     }
 }
