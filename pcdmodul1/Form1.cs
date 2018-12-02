@@ -116,6 +116,25 @@ namespace pcdmodul1
                 
                 p4.Image = merah;
 
+                // inveert
+                Bitmap temp = new Bitmap((Bitmap)this.pbInput.Image);
+                Bitmap bmap = (Bitmap)temp.Clone();
+                Color c;
+                for (int i = 0; i < bmap.Width; i++)
+                {
+                    for (int j = 0; j < bmap.Height; j++)
+                    {
+                        c = bmap.GetPixel(i, j);
+                        bmap.SetPixel(i, j,
+                  Color.FromArgb(255 - c.R, 255 - c.G, 255 - c.B));
+                    }
+                }
+                temp = (Bitmap)bmap.Clone();
+                p5.Image = temp;
+
+                
+
+
 
                 //buat nampilin flowlayout
                 flowLayoutPanel1.Visible = true;
@@ -699,7 +718,7 @@ namespace pcdmodul1
 
         private void tentangToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show("Syafri Wira Wicaksana | TI4E | 1541180215");
+            MessageBox.Show("Aura Kanza Caesaria | TI4E | 1541180188 |Syafri Wira Wicaksana | TI4E | 1541180215 | Yogatama Abi Permana | TI4E | 1541180119");
         }
     }
 }
