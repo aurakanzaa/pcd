@@ -115,7 +115,39 @@ namespace pcdmodul1
                 }
                 
                 p4.Image = merah;
+                //solarised
+                int Rt = 10, Gt = 10, Bt = 10;
+                Bitmap solaris = new Bitmap((Bitmap)this.pbInput.Image);
+                for (int i = 0; i < solaris.Width; i++)
+                {
+                    for (int j = 0; j < solaris.Height; j++)
+                    {
+                        Color c1 = solaris.GetPixel(i, j);
+                        int r = c1.R;
+                        int g = c1.G;
+                        int bl = c1.B;
+                        if (c1.R < Rt)
+                        {
+                            r = truncate(255 - c1.R);
+                        }
 
+                        if (c1.G < Gt)
+                        {
+                            g = truncate(255 - c1.G);
+                        }
+
+                        if (c1.B < Bt)
+                        {
+                            bl = truncate(255 - c1.B);
+                        }
+
+
+                        solaris.SetPixel(i, j, Color.FromArgb(r, g, bl));
+                    }
+                }
+                p6.Image = solaris;
+
+                //p4.Image = merah;
 
                 //buat nampilin flowlayout
                 flowLayoutPanel1.Visible = true;
